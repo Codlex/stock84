@@ -14,7 +14,7 @@ public class AntiGravityMovementStrategy {
 		processEnemies(tank.getPosition(), enemies);
 		// handle walls
 		processWalls(tank.getPosition(), tank.getBattleFieldHeight(), tank.getBattleFieldWidth());
-		// add middle random point of antigravity
+		// add middle random point of anti-gravity
 		processMiddlePoint();
 	}
 

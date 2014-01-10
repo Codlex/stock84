@@ -24,7 +24,7 @@ public class Enemy {
 
 	public Enemy(Point2D.Double myPosition, double myHeadingRadians, ScannedRobotEvent scannedRobotEvent) {
 		this.name = scannedRobotEvent.getName();
-		// calculate absolute tank position
+		// calculate absolute tank position TODO: check %
 		double absBearingRadians = (myHeadingRadians+scannedRobotEvent.getBearingRadians())%(2*Math.PI);
 		double x = myPosition.getX()+Math.sin(absBearingRadians)*scannedRobotEvent.getDistance();
 		double y = myPosition.getY()+Math.cos(absBearingRadians)*scannedRobotEvent.getDistance();

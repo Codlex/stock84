@@ -58,7 +58,7 @@ public class Stock84 extends AdvancedRobot {
 
 	@Override
 	public void onScannedRobot(ScannedRobotEvent event) {
-		Enemy enemy = new Enemy(new Point2D.Double(getX(), getY()), getHeadingRadians(), event);
+		Enemy enemy = new Enemy(getPosition(), getHeadingRadians(), event);
 		this.enemies.put(enemy.getName(), enemy);
 		
 		if (shouldBecomeNewTarger(enemy)) {
