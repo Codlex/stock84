@@ -7,6 +7,7 @@ import robocode.ScannedRobotEvent;
 public class Enemy {
 	
 	private String name;
+	private double energy;
 	private Point2D.Double position;
 	private boolean isAlive;
 	
@@ -16,6 +17,10 @@ public class Enemy {
 
 	public Point2D.Double getPosition() {
 		return position;
+	}
+	
+	public double getEnergy() {
+		return energy;
 	}
 
 	public boolean isAlive() {
@@ -30,6 +35,7 @@ public class Enemy {
 		double y = myPosition.getY()+Math.cos(absBearingRadians)*scannedRobotEvent.getDistance();
 		this.position = new Point2D.Double(x, y);
 		this.isAlive = true;
+		this.energy = scannedRobotEvent.getEnergy();
 	}
 	
 	
