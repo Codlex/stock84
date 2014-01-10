@@ -4,7 +4,7 @@ import java.awt.geom.Point2D;
 
 import robocode.ScannedRobotEvent;
 
-public class Enemy implements Comparable<Enemy> {
+public class Enemy {
 	
 	private String name;
 	private Point2D.Double position;
@@ -32,36 +32,13 @@ public class Enemy implements Comparable<Enemy> {
 		this.isAlive = true;
 	}
 	
-	/**
-	 * Implemented so that data structures differ bots by their names.
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof Enemy)) {
-			return false;
-		}
-		Enemy enemy = (Enemy) obj;
-		return this.name.equals(enemy.name); 
-	}
-
-	/**
-	 * Implemented so that data structures differ bots by their names.
-	 */
-	@Override
-	public int compareTo(Enemy enemy) {
-		return this.name.compareTo(enemy.name);
-	}
-	
-	/**
-	 * Implemented so that data structures differ bots by their names.
-	 */
-	@Override
-	public int hashCode() {
-		return this.name.hashCode();
-	}
 	
 	@Override
 	public String toString() {
 		return this.getName() + " " + this.getPosition();
+	}
+
+	public void setIsAlive(boolean b) {
+		this.isAlive = false;
 	}
 }

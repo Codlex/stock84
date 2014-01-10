@@ -2,18 +2,19 @@ package com.codlex;
 import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
-import java.util.Set;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
 import robocode.AdvancedRobot;
+import robocode.RobotDeathEvent;
 import robocode.ScannedRobotEvent;
 
 
 public class Stock84 extends AdvancedRobot {
 	
-	// enemy map 
-	TreeSet<Enemy> enemies = new TreeSet<Enemy>();
+	private Map<String, Enemy> enemies = new TreeMap();
+	private Enemy target;
 	
 	/**
 	 * Main run method. 
@@ -24,9 +25,10 @@ public class Stock84 extends AdvancedRobot {
 		setTurnRadarRightRadians(2*Math.PI);
 
 		while(true) {
+			doMovement();
 			// rotate radar all the time
 			setTurnRadarLeftRadians(2*Math.PI);
-			doMovement();
+			// implement fire here
 			execute();
 		}
 	}
@@ -44,27 +46,49 @@ public class Stock84 extends AdvancedRobot {
 		setColors(Color.BLACK,Color.BLACK,Color.PINK);
 		setAdjustGunForRobotTurn(true);
 		setAdjustRadarForGunTurn(true);
+		this.target = createSimpleTarget();
 	}
 
 	
 	
+	private Enemy createSimpleTarget() {
+		// implement this so that we aim somewhere if there is no target present
+		return null;
+	}
+
 	@Override
 	public void onScannedRobot(ScannedRobotEvent event) {
 		Enemy enemy = new Enemy(new Point2D.Double(getX(), getY()), getHeadingRadians(), event);
-		// remove old enemy entity if present
-		this.enemies.remove(enemy);
-		// add new enemy entity
-		this.enemies.add(enemy);
+		this.enemies.put(enemy.getName(), enemy);
+		
+		if (shouldBecomeNewTarger(enemy)) {
+			this.target = enemy;
+		}
+	}
+
+	private boolean shouldBecomeNewTarger(Enemy enemy) {
+		// implement logic here
+		// for example check distance between current tank to enemy tank and last target and current tank
+		// also think of taking as a target someone that has low energy
+		return false;
 	}
 
 	public Double getPosition() {
 		return new Point2D.Double(getX(), getY());
 	}
 	
+	@Override
+	public void onRobotDeath(RobotDeathEvent event) {
+		
+		Enemy enemy = this.enemies.get(event.getName());
+		if (enemy != null) { 
+			enemy.setIsAlive(false);
+		}
+	}
+	
+	// Movement math TODO: REFACTOR IF YOU HAVE TIME! (START)
 	
 	
-	/////////////////////////////////////////////////////////////////
-	// to REFACTOR:
 	/**Move towards an x and y coordinate**/
 	void moveTo(double x, double y) {
 	    double dist = 20; 
@@ -95,7 +119,7 @@ public class Stock84 extends AdvancedRobot {
 	    return dir;
 	}
 	
-	//gets the absolute bearing between to x,y coordinates
+	// gets the absolute bearing between to x,y coordinates
 	public double absBearing( Point2D.Double position1, Point2D.Double position2 )
 	{
 		double xo = position2.getX()-position1.getX();
@@ -119,6 +143,8 @@ public class Stock84 extends AdvancedRobot {
 		}
 		return 0;
 	}
+	
+	// Movement math TODO: REFACTOR IF YOU HAVE TIME! (END)
 	
 	
 }
