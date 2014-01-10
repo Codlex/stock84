@@ -59,4 +59,9 @@ public class Enemy implements Comparable<Enemy> {
 	public int hashCode() {
 		return this.name.hashCode();
 	}
+	
+	@Override
+	public String toString() {
+		return this.getName() + " " + this.getPosition();
+	}
 }
